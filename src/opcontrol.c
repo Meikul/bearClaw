@@ -57,18 +57,19 @@ void operatorControl() {
 	while (1) {
 		// ---------------- Drive ---------------
 		int joyY = joystickGetAnalog(1, 2);
-		int joyX = joystickGetAnalog(1, 1);
-		int strafeX = joystickGetAnalog(1, 4);
+		int joyX = -joystickGetAnalog(1, 4);
+		int strafeX = joystickGetAnalog(1, 1);
 		motorSet(frDrive, lin(joyY-strafeX-joyX));
-		motorSet(mrDrive, -lin(joyY-strafeX+joyX));
-		motorSet(brDrive, lin(joyY-strafeX+joyX));
-		motorSet(flDrive, lin(joyY+strafeX+joyX));
+		motorSet(mrDrive, lin(joyY-strafeX+joyX));
+		motorSet(brDrive, -lin(joyY-strafeX+joyX));
+		motorSet(flDrive, -lin(joyY+strafeX+joyX));
 		motorSet(mlDrive, -lin(joyY+strafeX-joyX));
 		motorSet(blDrive, lin(joyY+strafeX-joyX));
 
 		//  ---------------- Lift ----------------
 		bool liftUp = joystickGetDigital(1, 5, JOY_UP);
 		bool liftDown = joystickGetDigital(1, 5, JOY_DOWN);
+    if (joystickGetDigital(1, 7, JOY_DOWN)) encoderReset(liftEnc);
 		if(liftUp || liftDown)
     {
       liftSet(127 * (liftUp - liftDown));
@@ -101,8 +102,8 @@ void liftSet(int power)
 {
 	motorSet(trLift, -power);
 	motorSet(brLift, power);
-	motorSet(tlLift, power);
-	motorSet(blLift, -power);
+	motorSet(tlLift, -power);
+	motorSet(blLift, power);
 }
 
 void driveSet(int left, int right)

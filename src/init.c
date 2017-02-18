@@ -37,5 +37,5 @@ void initializeIO() {
  * can be implemented in this task if desired.
  */
 void initialize() {
-  Encoder liftEnc = encoderInit(liftEnc1, liftEnc2, false);
+  liftEnc = encoderInit(liftEnc1, liftEnc2, false);
 }
